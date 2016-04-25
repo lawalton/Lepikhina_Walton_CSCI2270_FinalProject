@@ -18,20 +18,20 @@ DecisionTree::~DecisionTree()
     //dtor
 }
 
-void DecisionTree::load(const string& path)
+void DecisionTree::load(string path)
 {
-    vector<SavedNode> savedNodes;
-    ifstream file(path.c_str());
-    if (file.good())
+    vector<SavedNode> savedNodes; //create a vector of saved nodes ex: ("cat", -1, -1) where -1 represents no children
+    ifstream file(path.c_str()); //input stream
+    if (file.good()) // checks to see if file exists
     {
-        string line;
+        string line; //
         while (getline(file, line))
         {
             SavedNode sn;
-            sn.fromString(line);
-            savedNodes.push_back(sn);
+            sn.fromString(line); //from string to Node
+            savedNodes.push_back(sn); // push to back of vector
         }
-        SNtoN(savedNodes);
+        SNtoN(savedNodes); //Saved Node to Node: takes savedNodes, parses it into tokens and then assigns tokens to the fields
     }
     else
     {
@@ -39,29 +39,29 @@ void DecisionTree::load(const string& path)
     }
 }
 
-void DecisionTree::save(const string& path)
+void DecisionTree::save(string path)
 {
-    vector<SavedNode> savedNodes = NtoSN();
-    ofstream file(path.c_str());
-    for (int i = 0; i < (int)savedNodes.size(); i++)
+    vector<SavedNode> savedNodes = NtoSN(); //vector of savedNodes = Node to Saved Nodes -> Copying result of NtoSN to savedNodes
+    ofstream file(path.c_str()); //output stream
+    for (int i = 0; i < (int)savedNodes.size(); i++) //makes sure it saves all of the savedNodes
     {
         file << savedNodes[i].toString() << endl;
     }
 }
 
-void DecisionTree::SNtoN(vector<SavedNode>& savedNodes)
+void DecisionTree::SNtoN(vector<SavedNode>& savedNodes) // Saved Node to Node
 {
-    vector<Node*> nodePointers;
+    vector<Node*> nodePointers; //mapping from node index to node pointer
     for (int i = 0; i < (int)savedNodes.size(); i++)
     {
         Node* node = new Node(savedNodes[i].info);
         nodePointers.push_back(node);
-    }
+    } // allocate nodes of tree
     for (int i = 0; i < (int)savedNodes.size(); i++)
     {
         Node* node = nodePointers[i];
         SavedNode savedNode = savedNodes[i];
-        if (savedNode.yes < 0)
+        if (savedNode.yes < 0) //if savedNode.yes = -1 then there are no children
         {
             node->yes = NULL;
         }
@@ -69,7 +69,7 @@ void DecisionTree::SNtoN(vector<SavedNode>& savedNodes)
         {
             node->yes = nodePointers[savedNode.yes];
         }
-        if (savedNode.no < 0)
+        if (savedNode.no < 0) //if savedNode.no = -1 then there are no children
         {
             node->no = NULL;
         }
@@ -77,8 +77,8 @@ void DecisionTree::SNtoN(vector<SavedNode>& savedNodes)
         {
             node->no = nodePointers[savedNode.no];
         }
-    }
-    if (root != NULL)
+    } //build tree
+    if (root != NULL) // just in case load is called twice --> BUG
     {
         //TODO destroy tree
         //create function destroy tree
@@ -87,11 +87,11 @@ void DecisionTree::SNtoN(vector<SavedNode>& savedNodes)
     root = nodePointers[0];
 }
 
-int findNodeIndex(const vector<Node*>& v, Node* node)
+int findNodeIndex(const vector<Node*>& nodePointers, Node* node) //find index of Node*
 {
-    for (size_t i=0;i<v.size();i++)
+    for (int i=0;i<(int)nodePointers.size();i++)
     {
-        if (v[i] == node)
+        if (nodePointers[i] == node)
         {
             return i;
         }
@@ -99,9 +99,9 @@ int findNodeIndex(const vector<Node*>& v, Node* node)
     return -1; // should never happen
 }
 
-void traverse(Node* node,vector<Node*>& nodePointers)
+void traverse(Node* node,vector<Node*>& nodePointers) //recursive function that goes through all nodes and collects all nodePointers
 {
-    nodePointers.push_back(node);
+    nodePointers.push_back(node); // do this first so you push root back first
     if (node->yes != NULL)
     {
         traverse(node->yes, nodePointers);
@@ -113,8 +113,8 @@ void traverse(Node* node,vector<Node*>& nodePointers)
 }
 vector<SavedNode> DecisionTree::NtoSN()
 {
-    vector<Node*> nodePointers;
-    traverse(root, nodePointers); //filled node pointers and map and map of Node* to index
+    vector<Node*> nodePointers; //mapping from node index to node pointer
+    traverse(root, nodePointers); //map of Node* to index
     vector<SavedNode> savedNodes;
     for (int i = 0; i < (int)nodePointers.size(); i++)
     {
@@ -137,7 +137,7 @@ vector<SavedNode> DecisionTree::NtoSN()
         {
             savedNode.no = findNodeIndex(nodePointers, node->no);
         }
-        savedNodes.push_back(savedNode);
+        savedNodes.push_back(savedNode); //copy saved node to back of vectosr
     }
     return savedNodes;
 }

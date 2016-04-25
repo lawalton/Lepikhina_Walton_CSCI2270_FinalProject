@@ -12,13 +12,6 @@ using namespace std;
 
 int main(int arc, char *argv[])
 {
-    //first command line argument will be the file name to read from
-
-    //print out instructions at the top, change it so that the user can
-    // input yes, Yes, y, no, No, or n
-    //TODO add menu at the start
-    //menu: how to play, play the game, how many animals? how many questions? information
-    //information prints the readme
     //add rules about yes or no questions in how to play
     //put instructions for playing in an external file and read it in
     //TOOD cite internet for try catch
@@ -58,7 +51,7 @@ int main(int arc, char *argv[])
         try
         {
             //try to convert it to integer
-            menu = atoi(userInput.c_str());
+            menu = stoi(userInput);
         }
         catch(invalid_argument&)
         {
