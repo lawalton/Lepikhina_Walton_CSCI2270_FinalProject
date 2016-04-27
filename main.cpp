@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <stdexcept>
 #include "DecisionTree.h"
 
@@ -7,18 +8,17 @@
     Ksenia Lepikhina and Lindsay Walton
 */
 
+/*
+Note: the exception names for the try catch statements, lines 59-70,
+were found on the internet, from cplusplus.com
+http://www.cplusplus.com/reference/stdexcept/invalid_argument/
+http://www.cplusplus.com/reference/stdexcept/out_of_range/
+*/
+
 using namespace std;
 
 int main(int arc, char *argv[])
 {
-    //first command line argument will be the file name to read from
-
-    // change it so that the user can
-    // input yes, Yes, y, no, No, or n
-    //add rules about yes or no questions in how to play
-    //put instructions for playing in an external file and read it in
-    //TOOD cite internet for try catch
-
     //make tree
     DecisionTree *gameTree = new DecisionTree();
 
@@ -28,15 +28,13 @@ int main(int arc, char *argv[])
     string user;
     string question;
     string animal;
-
-    //TODO ERROR CHECKING FOR USER INPUT EVERYWHERE
     string userInput = "";
     int menu = 0;
     bool correct = true; //flag to determine if the user put in correct input
 
     cout << "Welcome to Animal Guessing Game!" << endl;
 
-    while (menu != 6)
+    while (menu != 8)
     {
         //print menu
         cout << "===========Main Menu============" << endl;
@@ -45,8 +43,12 @@ int main(int arc, char *argv[])
         cout << "3. How many possible animals?" << endl;
         cout << "4. Display all the animals" << endl;
         cout << "5. How many possible questions?" << endl;
-        cout << "6. Quit" << endl;
+        cout << "6. Load" <<endl;
+        cout << "7. Save" <<endl;
+        cout << "8. Quit" << endl;
         cin >> userInput;
+
+        //reset value of correct
         correct = true;
 
         // check if the user entered an integer
@@ -57,11 +59,13 @@ int main(int arc, char *argv[])
         }
         catch(invalid_argument&)
         {
+            //if stoi failed, user didn't input an integer
             cout << "Please enter an integer for the menu options." << endl;
             correct = false;
         }
         catch(out_of_range&)
         {
+            //user entered a number that is too large for the memory
             cout << "Please enter an integer that is in-range." << endl;
             correct = false;
         }
@@ -71,7 +75,7 @@ int main(int arc, char *argv[])
         {
             switch(menu)
             {
-                case 1:
+                case 1: //play the game
                 {
                     //get the root to the tree
                     curr = gameTree->getRoot();
@@ -87,13 +91,11 @@ int main(int arc, char *argv[])
                     //reached the end of the questions
                     cout << "Is it a " << curr->info << "?\n> ";
                     cin >> user;
-                    //TODO add checking here to make sure that the user enters a valid response
 
                     if (user.compare("yes") == 0)
                     {
                         //guessed the correct animal
                         cout << "I win!" << endl;
-                        //TOOD add loop so that they can play again
                     }
                     else
                     {
@@ -101,17 +103,23 @@ int main(int arc, char *argv[])
                     }
                     break;
                 }
-                case 2:
+                case 2: //how to play
                 {
+                    cout << "Here's how to play!" << endl;
+                    cout << "Think of an animal, and I'll try to guess what animal it is." << endl;
+                    cout << "I'll ask you yes or no questions about your animal, so know your stuff!" << endl;
+                    cout << "When I ask a question, only answer with 'yes' or 'no' (don't capitalize them)." << endl;
+                    cout << "If I guess your animal, I win. If I don't, you win!" << endl;
+                    cout << "Ready to play?" << endl;
                     break;
                 }
-                case 3:
+                case 3: //how many animals
                 {
                     int numAnimals = gameTree->countAnimals();
                     cout << "I currently know " << numAnimals << " animals. You'll never beat me!" << endl;
                     break;
                 }
-                case 4:
+                case 4: //show all animals
                 {
                     cout << "If you haven't played yet, seeing all the animals is cheating." << endl;
                     cout << "Do you really want to display all animals?\n> ";
@@ -124,21 +132,39 @@ int main(int arc, char *argv[])
 
                     break;
                 }
-                case 5:
+                case 5: //how many questions
                 {
                     int numQuestions = gameTree->countQuestions();
                     cout << "There are currently " << numQuestions << " possible questions that I could ask you." << endl;
                     cout << "You better know your stuff!" << endl;
                     break;
                 }
-                case 6:
+                case 6: //load
+                {
+                    cout<< "Enter file path (/home/user/Documents/tree.txt)" << endl;
+                    string path;
+                    cin.ignore();
+                    getline(cin,path);
+                    gameTree->load(path);
+                    break;
+                }
+                case 7: //save
+                {
+                    cout<< "Enter file path (/home/user/Documents/tree.txt)" << endl;
+                    string path;
+                    cin.ignore();
+                    getline(cin,path);
+                    gameTree->save(path);
+                    break;
+                }
+                case 8: //quit
                 {
                     cout << "Thanks for playing!" << endl;
                     break;
                 }
                 default:
                 {
-                    cout << "Please select one of the menu options (1-6)" << endl;
+                    cout << "Please enter an in-range integer for the menu options." << endl;
                     break;
                 }
             }
@@ -146,6 +172,5 @@ int main(int arc, char *argv[])
     }
 
     cout << "See you next time!" << endl;
-
     return 0;
 }
