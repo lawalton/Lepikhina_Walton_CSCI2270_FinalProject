@@ -1,5 +1,4 @@
 #include <iostream>
-#include <fstream>
 #include <stdexcept>
 #include "DecisionTree.h"
 
@@ -12,6 +11,10 @@ using namespace std;
 
 int main(int arc, char *argv[])
 {
+    //first command line argument will be the file name to read from
+
+    // change it so that the user can
+    // input yes, Yes, y, no, No, or n
     //add rules about yes or no questions in how to play
     //put instructions for playing in an external file and read it in
     //TOOD cite internet for try catch
@@ -33,7 +36,7 @@ int main(int arc, char *argv[])
 
     cout << "Welcome to Animal Guessing Game!" << endl;
 
-    while (menu != 8)
+    while (menu != 6)
     {
         //print menu
         cout << "===========Main Menu============" << endl;
@@ -42,10 +45,9 @@ int main(int arc, char *argv[])
         cout << "3. How many possible animals?" << endl;
         cout << "4. Display all the animals" << endl;
         cout << "5. How many possible questions?" << endl;
-        cout << "6. Load" <<endl;
-        cout << "7. Save" <<endl;
-        cout << "8. Quit" << endl;
+        cout << "6. Quit" << endl;
         cin >> userInput;
+        correct = true;
 
         // check if the user entered an integer
         try
@@ -131,37 +133,19 @@ int main(int arc, char *argv[])
                 }
                 case 6:
                 {
-                    cout<< "Enter file path (/home/user/Documents/tree.txt)" << endl;
-                    string path;
-                    getline(cin,path);
-                    gameTree->load(path);
-                    break;
-                }
-                case 7:
-                {
-                    cout<< "Enter file path (/home/user/Documents/tree.txt)" << endl;
-                    string path;
-                    getline(cin,path);
-                    gameTree->save(path);
-                    break;
-                }
-                case 8:
-                {
                     cout << "Thanks for playing!" << endl;
                     break;
                 }
                 default:
                 {
-                    cout << "Please enter an in-range integer for the menu options." << endl;
+                    cout << "Please select one of the menu options (1-6)" << endl;
                     break;
                 }
             }
         }
     }
 
-    // gameTree->askQuestion();
-    //gameTree->displayAnimals();
-
     cout << "See you next time!" << endl;
+
     return 0;
 }
