@@ -1,7 +1,7 @@
 #include "DecisionTree.h"
 
 /*
-Note: Maksim Lepikhina assisted with the algorithm for loading and saving of the tree
+Note: Maksim Lepikhin assisted with the algorithm for loading and saving of the tree
 to and from a text file.
 */
 using namespace std;
