@@ -1,0 +1,15 @@
+Does it live underwater?;1;8
+Does it have fins?;2;5
+Is it scary?;3;4
+shark;-1;-1
+fish;-1;-1
+Does it have 8 arms?;6;7
+octopus;-1;-1
+jellyfish;-1;-1
+Does it have fur?;9;12
+Is it domesticated?;10;11
+cat;-1;-1
+lion;-1;-1
+Does it have feathers?;13;14
+bird;-1;-1
+snake;-1;-1

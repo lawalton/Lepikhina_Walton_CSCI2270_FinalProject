@@ -56,7 +56,8 @@ those answers. After this, the user will be taken back to the main menu.
 
 3) Dependencies:
 There are no external libraries that the user must have. The user only needs
-main.cpp, DecisionTree.h, DecisionTree.cpp and TODO add the text file stuff.
+main.cpp, DecisionTree.h, DecisionTree.cpp, and the optional text file to
+build an existing tree.
 
 4) System Requirements:
 There are no system requirements for this game. The user only needs to have
@@ -67,7 +68,17 @@ The Animal Guessing Game development team consists of Ksenia Lepikhina and
 Lindsay Walton.
 
 6) Contributors:
-The development team has received assistance from TODO add people that helped
+The development team has received assistance from Maksim Lepikhina, as he 
+assisted with saving the tree to a text file and then re-constructing the
+tree from a text file.
 
 7) Known Issues:
-TODO add do this section  
+a) A user could answer a question about the animal incorrectly (either by
+accident or lack of knowledge), and the program would "think" that the user
+won the game with a new animal, and the animal would be added to the tree
+a second tree, with an incorrect answer leading to it. This could be resolved
+by adding a search function for animals. When a user has won and entered the
+animal he/she was thinking of, the program searches the tree for that animal.
+If the animal is found, the program could display a message stating that that
+animal is already in the tree, and the user must have answered a question
+incorrectly.  
