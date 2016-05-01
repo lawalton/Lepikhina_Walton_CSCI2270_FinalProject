@@ -5,7 +5,8 @@
 #include <fstream>
 #include <vector>
 #include <iostream>
-#include <stdlib.h>
+#include <cstdlib>	//Changed to C++ version of <stdlib.h>	-KT
+#include <cctype>	//Contains tolower and isupper	-KT
 
 /*
     CSCI 2270 Final Project
@@ -87,11 +88,11 @@ class DecisionTree
 {
     public:
         DecisionTree();
-        ~DecisionTree();
+        ~DecisionTree();	//Works	-KT
         void load(std::string path); // load function
         void save(std::string path); //save function
-        int countAnimals(); // function to count the number of animals in the tree
-        int countQuestions(); // function to count all possible questions
+        int countAnimals(); // function to count the number of animals in the tree	(changed so no memory leaks	-KT)
+        int countQuestions(); // function to count all possible questions	(changed so no memory leaks	-KT)
         void displayAnimals(); //function to display all possible animals
         // Functions to add new questions:
         void addYesQuestion(Node *curr, std::string question, std::string otherAnswer);
@@ -99,15 +100,20 @@ class DecisionTree
         Node *askQuestion(Node *curr);
         void userWon(Node *curr); //function to handle the user winning (adding new animal)
         Node *getRoot();
+        
+        void printTree();	//Used for testing - delete if you want	-KT
 
     private:
         std::vector<SavedNode> NtoSN(); //Node to Saved Node -->
-        void SNtoN(std::vector<SavedNode>& savedNodes); //Saved Node to Node -->
+        void SNtoN(std::vector<SavedNode>& savedNodes); //Saved Node to Node -->	(changed so no memory leaks	-KT)
         void split(); //split text file
         Node *root; // pointer to the root of the tree
         void printAnimalNode(Node *node); //recursive function to print animals
         void countAnimalNodes(Node *node, int *c); //recursive function to count animal nodes
         void countQuestionNodes(Node *node, int *c);
+        
+        void removeNode(Node * r);	//Delete node	-KT
+        void printTree(Node *node);	//Used for testing - delete if you want	-KT
 };
 
 #endif // DECISIONTREE_H

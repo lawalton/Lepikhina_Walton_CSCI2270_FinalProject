@@ -1,12 +1,29 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <string>
 #include "DecisionTree.h"
+
+//stoi requires C++11, might want to note this in your readme	-KT
+//I really like your project. It's cool.	-KT
+
 
 /*
     CSCI 2270 Final Project
     Ksenia Lepikhina and Lindsay Walton
 */
+
+/*
+ * Kian Tanner - changes made:
+ * Added code to make yes or no answers lower case so that user may enter "Yes" or "No"
+ * Added code to check if user said not my animal but later said it was
+ * Added code to disallow any answer but yes or no for what is the answer to a new question
+ * Created destructor mem leaks reduced from 219 bytes to 4 bytes (tested with valgrind)
+ * Deleted pointer in count animals and count questions, now no memory leaks!! YAY!!
+ * Loading works, before, every line was marked as an animal
+ * Loading now doesn't leak memory
+ * No memory leaks at all (tested with valgrind)
+ */
 
 /*
 Note: the exception names for the try catch statements, lines 59-70,
@@ -21,6 +38,7 @@ int main(int arc, char *argv[])
 {
     //make tree
     DecisionTree *gameTree = new DecisionTree();
+    
 
     //current node
     Node *curr;
@@ -50,7 +68,7 @@ int main(int arc, char *argv[])
 
         //reset value of correct
         correct = true;
-
+		
         // check if the user entered an integer
         try
         {
@@ -69,8 +87,10 @@ int main(int arc, char *argv[])
             cout << "Please enter an integer that is in-range." << endl;
             correct = false;
         }
+        
 
         //check if the user entered acceptable input
+
         if (correct)
         {
             switch(menu)
@@ -92,6 +112,10 @@ int main(int arc, char *argv[])
                     cout << "Is it a " << curr->info << "?\n> ";
                     cin >> user;
 
+					for (int i = 0; i < user.length(); i++) {	//Convert to lower case so that user can input "Yes" or "No"	-KT
+						user[i] = tolower(user[i]);
+					}
+					
                     if (user.compare("yes") == 0)
                     {
                         //guessed the correct animal
@@ -124,6 +148,10 @@ int main(int arc, char *argv[])
                     cout << "If you haven't played yet, seeing all the animals is cheating." << endl;
                     cout << "Do you really want to display all animals?\n> ";
                     cin >> user;
+                    
+                    for (int i = 0; i < user.length(); i++) {	//Convert to lower case so that user can input "Yes" or "No"	-KT
+						user[i] = tolower(user[i]);
+					}
 
                     if (user.compare("yes") == 0)
                         gameTree->displayAnimals();
@@ -170,6 +198,7 @@ int main(int arc, char *argv[])
             }
         }
     }
+    delete gameTree;	//Destructor called	-KT
 
     cout << "See you next time!" << endl;
     return 0;
