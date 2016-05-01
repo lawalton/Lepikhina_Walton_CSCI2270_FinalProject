@@ -81,4 +81,5 @@ by adding a search function for animals. When a user has won and entered the
 animal he/she was thinking of, the program searches the tree for that animal.
 If the animal is found, the program could display a message stating that that
 animal is already in the tree, and the user must have answered a question
-incorrectly.  
+incorrectly. Also, there is nothing in the destructor. A function to destroy the
+tree needs to be created just in case someone tries to load the tree twice.
