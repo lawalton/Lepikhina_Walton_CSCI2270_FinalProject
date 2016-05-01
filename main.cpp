@@ -1,6 +1,8 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <stdlib.h>
+#include <string>
 #include "DecisionTree.h"
 
 /*
@@ -55,7 +57,8 @@ int main(int arc, char *argv[])
         try
         {
             //try to convert it to integer
-            menu = stoi(userInput);
+            //menu = stoi(userInput);
+            menu = atoi(userInput.c_str());
         }
         catch(invalid_argument&)
         {
