@@ -1,10 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
-<<<<<<< HEAD
-=======
 #include <stdlib.h>
->>>>>>> ef23e371ffbea316c65c4573bad39f54ed726a06
 #include <string>
 #include "DecisionTree.h"
 
@@ -42,7 +39,7 @@ int main(int arc, char *argv[])
 {
     //make tree
     DecisionTree *gameTree = new DecisionTree();
-    
+
 
     //current node
     Node *curr;
@@ -72,7 +69,7 @@ int main(int arc, char *argv[])
 
         //reset value of correct
         correct = true;
-		
+
         // check if the user entered an integer
         try
         {
@@ -92,7 +89,7 @@ int main(int arc, char *argv[])
             cout << "Please enter an integer that is in-range." << endl;
             correct = false;
         }
-        
+
 
         //check if the user entered acceptable input
 
@@ -120,7 +117,7 @@ int main(int arc, char *argv[])
 					for (int i = 0; i < user.length(); i++) {	//Convert to lower case so that user can input "Yes" or "No"	-KT
 						user[i] = tolower(user[i]);
 					}
-					
+
                     if (user.compare("yes") == 0)
                     {
                         //guessed the correct animal
@@ -153,7 +150,7 @@ int main(int arc, char *argv[])
                     cout << "If you haven't played yet, seeing all the animals is cheating." << endl;
                     cout << "Do you really want to display all animals?\n> ";
                     cin >> user;
-                    
+
                     for (int i = 0; i < user.length(); i++) {	//Convert to lower case so that user can input "Yes" or "No"	-KT
 						user[i] = tolower(user[i]);
 					}
